@@ -130,6 +130,10 @@ class SessionRepositoryMiddleware
         $restRepositoryId   = isSet($parameters["tmp_repository_id"]) ? $parameters["tmp_repository_id"] : null;
         $repoObject         = null;
 
+        if($requestInterface->getAttribute("action") === "switch_repository"){
+            return null;
+        }
+
         if($restRepositoryId !== null){
 
             $repoObject = UsersService::getRepositoryWithPermission($user, $restRepositoryId);
@@ -170,7 +174,7 @@ class SessionRepositoryMiddleware
                 $user->setArrayPref("history", "last_repository", $repoObject->getId());
             }
         }
-        
+
         return $repoObject;
 
     }

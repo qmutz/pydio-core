@@ -82,7 +82,7 @@ class Connexion{
         }
         Connexion.PydioLogs.push({action:action, sync:syncStatus});
     }
-	
+
 	/**
 	 * Add a parameter to the query
 	 * @param paramName String
@@ -100,7 +100,7 @@ class Connexion{
             this._parameters.set(paramName, paramValue);
         }
 	}
-	
+
 	/**
 	 * Sets the whole parameter as a bunch
 	 * @param hParameters Map
@@ -120,7 +120,7 @@ class Connexion{
             }
         }
 	}
-	
+
 	/**
 	 * Set the query method (get post)
 	 * @param method String
@@ -128,7 +128,7 @@ class Connexion{
 	setMethod(method){
 		this._method = method;
 	}
-	
+
 	/**
 	 * Add the secure token parameter
 	 */
@@ -244,14 +244,14 @@ class Connexion{
 	sendAsync(){
         this._send(true);
     }
-	
+
 	/**
 	 * Send synchronously
 	 */
 	sendSync(){
         this._send(false);
     }
-	
+
 	/**
 	 * Apply the complete callback, try to grab maximum of errors
 	 * @param parsedBody Transpot
@@ -270,37 +270,27 @@ class Connexion{
 
         let ctype = response.headers.get('Content-type');
 		if(parsedBody.responseXML && parsedBody.responseXML.documentElement && parsedBody.responseXML.documentElement.nodeName=="parsererror"){
-
 			message = "Parsing error : \n" + parsedBody.responseXML.documentElement.firstChild.textContent;
-
 		} else if(parsedBody.responseXML && parsedBody.responseXML.parseError && parsedBody.responseXML.parseError.errorCode != 0){
-
 			message = "Parsing Error : \n" + parsedBody.responseXML.parseError.reason;
-
 		} else if(ctype.indexOf("text/xml")>-1 && parsedBody.responseXML == null) {
-
 			message = "Expected XML but got empty response!";
-
 		} else if(ctype.indexOf("text/xml") == -1 && ctype.indexOf("application/json") == -1 && parsedBody.responseText.indexOf("<b>Fatal error</b>") > -1) {
-
 			message = parsedBody.responseText.replace("<br />", "");
-
 		} else if(response.status == 500) {
-
             message = "Internal Server Error: you should check your web server logs to find what's going wrong!";
-
         }
-		if(message){
+
+		if(message) {
 
             if(message.startsWith("You are not allowed to access this resource.")) {
                 message = tokenMessage;
             }
-			if(pydio) {
+			if (pydio) {
                 pydio.displayMessage("ERROR", message);
             } else {
                 alert(message);
             }
-
 		}
 		if(parsedBody.responseXML && parsedBody.responseXML.documentElement){
 
@@ -332,9 +322,10 @@ class Connexion{
 					}
 				}
                 if(messageType == "SUCCESS") messageNode.parentNode.removeChild(messageNode);
+				if(messageType == "ERROR" && this.onError) this.onError(parsedBody)
 			}
-
 		}
+
 		if(this.onComplete){
 
             parsedBody.status = response.status;

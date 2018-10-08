@@ -47,6 +47,7 @@ class PydioApi{
             }.bind(this);
         }
         c.onComplete = onComplete;
+        c.onError = onError;
         if(settings.async === false){
             c.sendSync();
         }else{
@@ -62,7 +63,7 @@ class PydioApi{
     }
 
     /**
-     * 
+     *
      * @param file
      * @param fileParameterName
      * @param queryStringParams
@@ -215,7 +216,12 @@ class PydioApi{
             get_action: 'switch_repository',
             repository_id:repositoryId
         };
-        this.request(params, completeCallback);
+
+        const previousRepositoryId = this._pydioObject.user.activeRepository
+
+        this.request(params, completeCallback, function() {
+            this._pydioObject.triggerRepositoryChange(previousRepositoryId, completeCallback)
+        }.bind(this));
     }
 
     switchLanguage(lang, completeCallback){
@@ -362,7 +368,7 @@ class PydioApi{
 
                     this._pydioObject.Parameters.set('SECURE_TOKEN', child.getAttribute("secure_token"));
                     Connexion.updateServerAccess(this._pydioObject.Parameters);
-                    
+
                 }
                 const result = child.getAttribute('value');
                 let errorId = false;

@@ -38,6 +38,7 @@ use Pydio\Core\Model\RepositoryInterface;
 use Pydio\Core\Services\CacheService;
 
 use Pydio\Core\Services\UsersService;
+use Pydio\Core\Services\RepositoryService;
 use Pydio\Core\Services\ApplicationState;
 use Pydio\Core\Utils\FileHelper;
 use Pydio\Log\Core\Logger;
@@ -187,6 +188,7 @@ class PluginsService
             /**
              * @var PluginsService $pServ
              */
+
             self::$instances[$identifier] = $pServ = new $c($ctx);
             if(!$ctx->isEmpty()) {
                 $emptyInstance = self::getInstance(Context::contextWithObjects(null, null));
@@ -241,6 +243,7 @@ class PluginsService
         if (isSet($metaSources) && is_array($metaSources) && count($metaSources)) {
             $keys = array_keys($metaSources);
             foreach ($keys as $plugId) {
+
                 if($plugId == "") continue;
                 /** @var AbstractMetaSource $instance */
                 $instance = $this->getPluginById($plugId);
@@ -263,6 +266,7 @@ class PluginsService
                 }
             }
         }
+
 
         // INIT MAIN DRIVER
         try {
