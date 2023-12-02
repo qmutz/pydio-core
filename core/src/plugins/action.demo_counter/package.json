@@ -8,7 +8,7 @@
   "license": "AGPL",
   "dependencies": {
     "grunt": "^1.0.1",
-    "grunt-babel": "~5.0.3",
+    "grunt-babel": "~6.0.0",
     "grunt-contrib-watch": "^1.0.0",
     "grunt-browserify": "~4.0.1"
   }
