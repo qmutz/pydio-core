@@ -18,7 +18,7 @@
     "cronstrue": "0.3.1",
     "doc-ready": "^1.0.4",
     "he": "1.1.0",
-    "lodash": "^3.10.1",
+    "lodash": "^4.17.17",
     "lodash.debounce": "^4.0.8",
     "material-ui": "^0.17.0",
     "material-ui-legacy": "git://github.com/pydio/material-ui.git#dc3704bc50e90e2b899c25e206f161de25e8a59d",
