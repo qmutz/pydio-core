@@ -5,16 +5,20 @@
   "source_path": "res/js",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepublish": "npm run snyk-protect",
+    "snyk-protect": "snyk-protect"
   },
   "author": "Abstrium SAS",
   "license": "agpl",
   "dependencies": {
     "ckeditor": "^4.6.2",
     "grunt": "^1.0.1",
-    "grunt-babel": "~5.0.3",
-    "grunt-browserify": "~4.0.1",
+    "grunt-babel": "~7.0.0",
+    "grunt-browserify": "~6.0.0",
     "grunt-contrib-copy": "^1.0.0",
-    "grunt-contrib-watch": "^1.0.0"
-  }
+    "grunt-contrib-watch": "^1.0.0",
+    "@snyk/protect": "latest"
+  },
+  "snyk": true
 }
